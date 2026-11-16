@@ -33,7 +33,7 @@
   body {
     font-family: var(--sans);
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.7;
     color: var(--cafe);
     background: var(--papel);
@@ -122,7 +122,7 @@
     background: rgba(251, 248, 243, .86); backdrop-filter: blur(14px);
     box-shadow: 0 1px 0 rgba(76, 52, 34, .08); padding: 12px 0;
   }
-  nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  nav { display: flex; align-items: center; gap: 34px; }
   .marca { display: flex; align-items: center; gap: 14px; }
   .monograma {
     font-family: var(--serif); font-size: 1.7rem; line-height: 1; color: var(--cafe);
@@ -133,7 +133,7 @@
   .marca:hover .monograma { transform: rotate(-8deg) scale(1.06); background: var(--cafe); color: var(--creme); }
   .marca-nome { font-family: var(--serif); font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.1; }
   .marca-nome small { display: block; font: 400 .56rem var(--sans); letter-spacing: .38em; margin-top: 4px; }
-  .menu { display: flex; align-items: center; gap: 34px; list-style: none; }
+  .menu { display: flex; align-items: center; gap: 34px; list-style: none; margin-left: auto; }
   .menu a:not(.btn) {
     font-size: .76rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
     position: relative; padding: 6px 0;
@@ -144,7 +144,22 @@
     transition: transform .4s var(--ease);
   }
   .menu a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
-  .menu .btn { padding: 13px 22px; }
+  .cta-topo { padding: 13px 22px; flex: none; }
+  /* botão do menu, só aparece em telas pequenas */
+  .menu-btn {
+    display: none; flex: none; position: relative; width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(76, 52, 34, .35); background: none; cursor: pointer;
+  }
+  .menu-btn span {
+    position: absolute; left: 14px; right: 14px; height: 1.5px; background: var(--cafe);
+    transition: transform .4s var(--ease), opacity .3s;
+  }
+  .menu-btn span:nth-child(1) { top: 17px; }
+  .menu-btn span:nth-child(2) { top: 22px; }
+  .menu-btn span:nth-child(3) { top: 27px; }
+  header.aberto .menu-btn span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  header.aberto .menu-btn span:nth-child(2) { opacity: 0; }
+  header.aberto .menu-btn span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 
   /* ---------- Hero ---------- */
   .hero { --topo: var(--papel); --para: var(--papel); --fundo: var(--j-claro); padding: 150px 0 56px; overflow: hidden; }
@@ -152,7 +167,11 @@
   .hero p.lead { margin: 28px 0 40px; }
   .acoes { display: flex; flex-wrap: wrap; gap: 14px; }
 
-  .retrato { position: relative; aspect-ratio: 4 / 5; }
+  /* a largura acompanha a altura da tela, para o retrato caber inteiro em notebooks */
+  .retrato {
+    position: relative; aspect-ratio: 4 / 5; justify-self: center;
+    width: min(100%, max(260px, calc((100svh - 210px) * .8)));
+  }
   .retrato .foto {
     position: absolute; inset: 0; border-radius: 280px 280px var(--raio) var(--raio);
     background: linear-gradient(160deg, var(--creme) 0%, var(--areia) 100%);
@@ -332,20 +351,71 @@
   .surgir.visto { opacity: 1; transform: none; }
 
   /* ---------- Responsivo ---------- */
+  /* Full HD e telas maiores: tudo um pouco maior e mais largo */
+  @media (min-width: 1600px) {
+    html { font-size: 112.5%; }
+    .wrap { width: min(1320px, 100% - 96px); }
+    .hero-grid { gap: 90px; }
+  }
+  /* Notebooks pequenos */
+  @media (max-width: 1100px) {
+    nav { gap: 22px; }
+    .menu { gap: 22px; }
+    .hero-grid { gap: 44px; }
+    .sobre-grid { gap: 50px; }
+    .agenda-grid { gap: 44px; }
+    .cartao { padding: 32px 26px 28px; }
+  }
+  /* Tablets e celulares */
   @media (max-width: 920px) {
-    .menu li:not(:last-child) { display: none; }
+    nav { gap: 12px; }
+    .cta-topo { margin-left: auto; }
+    .menu-btn { display: block; }
+    .menu {
+      position: absolute; top: 100%; left: 0; right: 0; margin: 0;
+      flex-direction: column; align-items: stretch; gap: 0; padding: 4px 24px 14px;
+      background: var(--papel); box-shadow: 0 24px 40px -28px rgba(76, 52, 34, .45);
+      opacity: 0; visibility: hidden; transform: translateY(-10px);
+      transition: opacity .35s var(--ease), transform .35s var(--ease), visibility .35s;
+    }
+    header.aberto { background: var(--papel); }
+    header.aberto .menu { opacity: 1; visibility: visible; transform: none; }
+    .menu li + li { border-top: 1px solid rgba(76, 52, 34, .1); }
+    .menu a:not(.btn) { display: block; padding: 18px 0; font-size: .82rem; }
+    .menu a:not(.btn)::after { display: none; }
+
     .hero-grid, .sobre-grid, .agenda-grid { grid-template-columns: 1fr; gap: 50px; }
-    .retrato { max-width: 380px; margin-inline: auto; width: 100%; }
+    .retrato { width: min(100%, 380px); }
     .cartoes, .relatos-grid, .posts { grid-template-columns: 1fr; }
     .passos-grid { grid-template-columns: 1fr 1fr; }
     .rodape-grid { grid-template-columns: 1fr; }
     section { padding: 48px 0; }
     .hero { padding-top: 120px; }
   }
+  /* Só tablets: duas colunas onde o celular usa uma */
+  @media (min-width: 640px) and (max-width: 920px) {
+    .cartoes, .relatos-grid, .posts { grid-template-columns: 1fr 1fr; }
+    .relato:last-child, .post:first-child { grid-column: 1 / -1; }
+    .post:first-child .capa { aspect-ratio: 16 / 8; }
+    .rodape-grid { grid-template-columns: 1fr 1fr; }
+    .rodape-grid > div:first-child { grid-column: 1 / -1; }
+  }
+  @media (min-width: 720px) and (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1.1fr .9fr; gap: 36px; }
+    .retrato { width: 100%; }
+    .agenda-grid { grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+  }
   @media (max-width: 520px) {
     .wrap { width: calc(100% - 32px); }
+    .menu { padding-inline: 16px; }
     .passos-grid { grid-template-columns: 1fr; }
+    .passo { padding-right: 0; }
     .marca-nome { font-size: 1rem; }
+    .acoes .btn { flex: 1 1 100%; justify-content: center; }
+    .sobre blockquote { font-size: 1.5rem; }
+    .formacao li { flex-direction: column; gap: 2px; }
+    .cabecalho-secao { margin-bottom: 36px; }
+    .blog .topo { margin-bottom: 36px; }
     .horas { grid-template-columns: 1fr 1fr; }
     .calendly { padding: 22px 16px; }
     .dias { gap: 3px; }
@@ -370,13 +440,16 @@
         <span class="monograma">LM</span>
         <span class="marca-nome">Larah Melyssa<small>Nutricionista</small></span>
       </a>
-      <ul class="menu">
+      <ul class="menu" id="menu">
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#areas">Atendimento</a></li>
         <li><a href="#blog">Blog</a></li>
         <li><a href="#relatos">Relatos</a></li>
-        <li><a href="#agendar" class="btn btn-cheio">Agendar</a></li>
       </ul>
+      <a href="#agendar" class="btn btn-cheio cta-topo">Agendar</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </div>
 </header>
@@ -597,6 +670,18 @@
   const topo = document.getElementById('topo');
   const aoRolar = () => topo.classList.toggle('rolou', window.scrollY > 30);
   addEventListener('scroll', aoRolar, { passive: true }); aoRolar();
+
+  // Menu em telas pequenas: abre, fecha ao escolher um link ou apertar Esc
+  const menuBtn = document.getElementById('menu-btn');
+  const alternarMenu = (abrir) => {
+    topo.classList.toggle('aberto', abrir);
+    menuBtn.setAttribute('aria-expanded', abrir);
+    menuBtn.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+  };
+  menuBtn.addEventListener('click', () => alternarMenu(!topo.classList.contains('aberto')));
+  document.querySelectorAll('#menu a, .cta-topo, .marca').forEach(a => a.addEventListener('click', () => alternarMenu(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') alternarMenu(false); });
+  matchMedia('(min-width: 921px)').addEventListener('change', () => alternarMenu(false));
 
   // Elementos surgem ao entrar na tela
   const obs = new IntersectionObserver((itens) => {
