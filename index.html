@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Larah Melyssa · Nutricionista</title>
+<meta name="description" content="Nutrição clínica com acompanhamento individual. Conheça o trabalho, leia o blog e agende sua consulta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Paleta e tipografia do manual da marca (LM-Tipografia.jpg) */
+  :root {
+    --creme: #E4D4C1;
+    --oliva: #50553A;
+    --terracota: #B28159;
+    --cafe: #4C3422;
+    --areia: #D4B48A;
+
+    /* tons derivados, só para fundos */
+    --papel: #FBF8F3;
+    --creme-suave: #F3EADF;
+    --oliva-escuro: #454A32;
+
+    --serif: 'Arapey', Georgia, serif;
+    --sans: 'Montserrat', system-ui, sans-serif;
+    --raio: 18px;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--cafe);
+    background: var(--papel);
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: min(1120px, 100% - 48px); margin-inline: auto; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.12; text-wrap: balance; }
+  h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); letter-spacing: -.01em; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h3 { font-size: 1.45rem; }
+  em { font-style: italic; color: var(--terracota); }
+
+  .rotulo {
+    font-size: .72rem; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--terracota); display: inline-flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  }
+  .rotulo::before { content: ""; width: 34px; height: 1px; background: currentColor; }
+  .lead { font-size: 1.08rem; font-weight: 300; max-width: 56ch; }
+
+  /* ---------- Blocos ligados por degradê ----------
+     Cada seção começa na cor da seção anterior (--de) e
+     desliza até a sua própria cor (--para). */
+  :root {
+    /* cor exata na emenda entre dois blocos vizinhos */
+    --j-claro: color-mix(in oklab, var(--papel), var(--creme-suave));
+    /* versões mais claras do oliva e do café, só para o fundo dos blocos escuros */
+    --oliva-bloco: #737957;
+    --cafe-bloco: #6E5340;
+    --j-oliva-in: color-mix(in oklab, var(--papel) 22%, var(--oliva-bloco));
+    --j-oliva-out: color-mix(in oklab, var(--papel) 30%, var(--oliva-bloco));
+    --j-creme: color-mix(in oklab, var(--creme-suave), var(--creme));
+    --j-cafe: color-mix(in oklab, var(--creme) 22%, var(--cafe-bloco));
+  }
+  /* O degradê fica dentro do bloco: entra pela cor da emenda de cima (--topo),
+     assenta na cor própria (--para) e sai pela emenda de baixo (--fundo). */
+  section {
+    --fin: 150px;
+    --fout: 130px;
+    background: linear-gradient(to bottom,
+      var(--topo) 0, var(--para) var(--fin),
+      var(--para) calc(100% - var(--fout)), var(--fundo) 100%);
+    padding: 56px 0;
+    position: relative;
+  }
+  .cabecalho-secao { max-width: 640px; margin-bottom: 56px; }
+  .cabecalho-secao p { margin-top: 18px; font-weight: 300; }
+
+  /* ---------- Botões ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    font: 500 .78rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase;
+    padding: 18px 30px; border-radius: 999px; border: 1px solid var(--oliva);
+    cursor: pointer; position: relative; overflow: hidden; isolation: isolate;
+    transition: color .45s var(--ease), transform .45s var(--ease), box-shadow .45s var(--ease);
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    transform: translateY(101%); transition: transform .45s var(--ease);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -14px rgba(76, 52, 34, .45); }
+  .btn:hover::before { transform: none; }
+  .btn .seta { transition: transform .45s var(--ease); }
+  .btn:hover .seta { transform: translateX(5px); }
+
+  .btn-cheio { background: var(--oliva); color: var(--papel); }
+  .btn-cheio::before { background: var(--cafe); }
+  .btn-cheio:hover { border-color: var(--cafe); }
+  .btn-linha { color: var(--oliva); background: transparent; }
+  .btn-linha::before { background: var(--oliva); }
+  .btn-linha:hover { color: var(--papel); }
+  .btn-claro { border-color: var(--creme); color: var(--creme); }
+  .btn-claro::before { background: var(--creme); }
+  .btn-claro:hover { color: var(--oliva-escuro); }
+
+  /* ---------- Navegação ---------- */
+  header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    transition: background .4s, box-shadow .4s, padding .4s;
+    padding: 20px 0;
+  }
+  header.rolou {
+    background: rgba(251, 248, 243, .86); backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgba(76, 52, 34, .08); padding: 12px 0;
+  }
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .marca { display: flex; align-items: center; gap: 14px; }
+  .monograma {
+    font-family: var(--serif); font-size: 1.7rem; line-height: 1; color: var(--cafe);
+    width: 46px; height: 46px; border: 1px solid rgba(76, 52, 34, .35); border-radius: 50%;
+    display: grid; place-items: center; letter-spacing: -.06em;
+    transition: transform .6s var(--ease), background .4s, color .4s;
+  }
+  .marca:hover .monograma { transform: rotate(-8deg) scale(1.06); background: var(--cafe); color: var(--creme); }
+  .marca-nome { font-family: var(--serif); font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.1; }
+  .marca-nome small { display: block; font: 400 .56rem var(--sans); letter-spacing: .38em; margin-top: 4px; }
+  .menu { display: flex; align-items: center; gap: 34px; list-style: none; }
+  .menu a:not(.btn) {
+    font-size: .76rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    position: relative; padding: 6px 0;
+  }
+  .menu a:not(.btn)::after {
+    content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px;
+    background: var(--terracota); transform: scaleX(0); transform-origin: right;
+    transition: transform .4s var(--ease);
+  }
+  .menu a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
+  .menu .btn { padding: 13px 22px; }
+
+  /* ---------- Hero ---------- */
+  .hero { --topo: var(--papel); --para: var(--papel); --fundo: var(--j-claro); padding: 150px 0 56px; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 70px; align-items: center; }
+  .hero p.lead { margin: 28px 0 40px; }
+  .acoes { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  .retrato { position: relative; aspect-ratio: 4 / 5; }
+  .retrato .foto {
+    position: absolute; inset: 0; border-radius: 280px 280px var(--raio) var(--raio);
+    background: linear-gradient(160deg, var(--creme) 0%, var(--areia) 100%);
+    display: grid; place-items: center; overflow: hidden;
+    transition: transform .8s var(--ease), box-shadow .8s var(--ease);
+  }
+  .retrato:hover .foto { transform: translateY(-8px); box-shadow: 0 40px 60px -40px rgba(76, 52, 34, .5); }
+  .retrato .foto span { font: 400 5.5rem var(--serif); color: rgba(76, 52, 34, .22); letter-spacing: -.06em; }
+  .retrato .aro {
+    position: absolute; inset: -18px 18px 18px -18px; border: 1px solid var(--terracota);
+    border-radius: 280px 280px var(--raio) var(--raio); opacity: .5; z-index: -1;
+    transition: transform .8s var(--ease);
+  }
+  .retrato:hover .aro { transform: translate(-8px, 8px); }
+  .aviso-foto {
+    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); white-space: nowrap;
+    font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(76, 52, 34, .6);
+  }
+
+  /* ---------- Sobre ---------- */
+  .sobre { --topo: var(--j-claro); --para: var(--creme-suave); --fundo: var(--j-claro); }
+  .sobre-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; }
+  .sobre-grid p + p { margin-top: 18px; }
+  .sobre blockquote {
+    font: italic 400 1.9rem/1.3 var(--serif); color: var(--oliva);
+    padding-left: 26px; border-left: 1px solid var(--terracota);
+  }
+  .formacao { list-style: none; margin-top: 34px; border-top: 1px solid rgba(76, 52, 34, .15); }
+  .formacao li {
+    display: flex; justify-content: space-between; gap: 20px; padding: 16px 8px;
+    border-bottom: 1px solid rgba(76, 52, 34, .15); font-size: .92rem;
+    transition: padding .4s var(--ease), background .4s;
+  }
+  .formacao li:hover { padding-left: 20px; background: rgba(255, 255, 255, .5); }
+  .formacao span { color: var(--terracota); font-size: .78rem; letter-spacing: .12em; }
+
+  /* ---------- Especialidades ---------- */
+  .areas { --topo: var(--j-claro); --para: var(--papel); --fundo: var(--j-oliva-in); --fout: 240px; padding-bottom: 80px; }
+  .cartoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cartao {
+    background: #fff; border: 1px solid rgba(76, 52, 34, .08); border-radius: var(--raio);
+    padding: 38px 32px 34px; position: relative; overflow: hidden;
+    transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s;
+  }
+  .cartao::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+    background: linear-gradient(90deg, var(--oliva), var(--terracota), var(--areia));
+    transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease);
+  }
+  .cartao:hover { transform: translateY(-8px); box-shadow: 0 30px 50px -34px rgba(76, 52, 34, .45); border-color: transparent; }
+  .cartao:hover::after { transform: scaleX(1); }
+  .icone {
+    width: 54px; height: 54px; border-radius: 50%; background: var(--creme-suave); color: var(--oliva);
+    display: grid; place-items: center; margin-bottom: 26px;
+    transition: background .5s, color .5s, transform .5s var(--ease);
+  }
+  .icone svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .cartao:hover .icone { background: var(--oliva); color: var(--creme); transform: rotate(-8deg) scale(1.08); }
+  .cartao p { margin-top: 12px; font-size: .93rem; font-weight: 300; }
+
+  /* ---------- Como funciona (bloco escuro) ---------- */
+  .passos { --topo: var(--j-oliva-in); --para: var(--oliva-bloco); --fundo: var(--j-oliva-out); --fin: 70px; --fout: 100px; padding: 44px 0 76px; color: var(--papel); }
+  .passos .rotulo { color: var(--creme); }
+  .passos em { color: var(--areia); }
+  .passos .passo p { opacity: .95; }
+  .passos .passo .num { opacity: .8; }
+  .passos-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(228, 212, 193, .25); }
+  .passo {
+    padding: 34px 26px 30px 0; position: relative;
+    transition: transform .5s var(--ease);
+  }
+  .passo::before {
+    content: ""; position: absolute; top: -1px; left: 0; height: 1px; width: 100%;
+    background: var(--areia); transform: scaleX(0); transform-origin: left;
+    transition: transform .7s var(--ease);
+  }
+  .passo:hover { transform: translateY(-6px); }
+  .passo:hover::before { transform: scaleX(1); }
+  .passo .num { font: italic 400 3rem/1 var(--serif); color: var(--areia); opacity: .55; transition: opacity .4s; }
+  .passo:hover .num { opacity: 1; }
+  .passo h3 { margin: 18px 0 10px; }
+  .passo p { font-size: .9rem; font-weight: 300; opacity: .85; }
+
+  /* ---------- Blog ---------- */
+  .blog { --topo: var(--j-oliva-out); --para: var(--papel); --fundo: var(--j-claro); --fin: 220px; padding-top: 110px; }
+  .blog .topo { display: flex; align-items: end; justify-content: space-between; gap: 30px; flex-wrap: wrap; margin-bottom: 56px; }
+  .blog .cabecalho-secao { margin-bottom: 0; }
+  .posts { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 26px; }
+  .post { display: flex; flex-direction: column; cursor: pointer; }
+  .capa {
+    border-radius: var(--raio); aspect-ratio: 4 / 3; overflow: hidden; position: relative; margin-bottom: 22px;
+  }
+  .post:first-child .capa { aspect-ratio: 4 / 3.2; }
+  .capa i {
+    position: absolute; inset: 0; display: block;
+    transition: transform 1s var(--ease);
+  }
+  .post:hover .capa i { transform: scale(1.08); }
+  .capa b {
+    position: absolute; top: 16px; left: 16px; font: 500 .64rem var(--sans); letter-spacing: .2em; text-transform: uppercase;
+    background: rgba(251, 248, 243, .9); padding: 8px 14px; border-radius: 999px;
+  }
+  .c1 i { background: radial-gradient(circle at 30% 30%, var(--areia), var(--terracota)); }
+  .c2 i { background: radial-gradient(circle at 70% 30%, #7c8260, var(--oliva)); }
+  .c3 i { background: radial-gradient(circle at 40% 70%, var(--creme), var(--areia)); }
+  .post time { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--terracota); }
+  .post h3 { margin: 10px 0; transition: color .4s; }
+  .post:hover h3 { color: var(--terracota); }
+  .post p { font-size: .92rem; font-weight: 300; }
+  .ler { margin-top: 16px; font-size: .74rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; display: inline-flex; gap: 10px; }
+  .ler span { transition: transform .4s var(--ease); }
+  .post:hover .ler span { transform: translateX(6px); }
+
+  /* ---------- Depoimentos ---------- */
+  .relatos { --topo: var(--j-claro); --para: var(--creme-suave); --fundo: var(--j-creme); }
+  .relatos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .relato {
+    padding: 36px 32px; border-radius: var(--raio); background: rgba(255, 255, 255, .55);
+    border: 1px solid rgba(76, 52, 34, .08);
+    transition: transform .5s var(--ease), background .5s, box-shadow .5s var(--ease);
+  }
+  .relato:hover { transform: translateY(-6px); background: #fff; box-shadow: 0 30px 50px -36px rgba(76, 52, 34, .4); }
+  .relato .aspas { font: 400 3.4rem/.6 var(--serif); color: var(--areia); display: block; margin-bottom: 14px; transition: color .4s; }
+  .relato:hover .aspas { color: var(--terracota); }
+  .relato p { font: italic 400 1.18rem/1.5 var(--serif); }
+  .relato footer { margin-top: 22px; font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; background: none; padding: 0; color: inherit; }
+
+  /* ---------- Agendamento ---------- */
+  .agenda { --topo: var(--j-creme); --para: var(--creme); --fundo: var(--j-cafe); --fout: 140px; padding-bottom: 80px; }
+  .agenda-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+  .agenda ul { list-style: none; margin: 30px 0 38px; }
+  .agenda li { display: flex; gap: 14px; padding: 9px 0; font-size: .95rem; }
+  .agenda li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--terracota); margin-top: 10px; }
+  .calendly {
+    background: var(--papel); border-radius: var(--raio); padding: 34px;
+    box-shadow: 0 40px 70px -50px rgba(76, 52, 34, .6);
+    transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+  }
+  .calendly:hover { transform: translateY(-6px); box-shadow: 0 50px 80px -46px rgba(76, 52, 34, .6); }
+  .calendly header { position: static; padding: 0 0 20px; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(76, 52, 34, .12); }
+  .calendly header strong { font: 400 1.4rem var(--serif); }
+  .calendly header small { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--terracota); }
+  .dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 22px 0; text-align: center; font-size: .82rem; }
+  .dias span { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; opacity: .55; padding-bottom: 6px; }
+  .dias button {
+    font: inherit; color: inherit; background: none; border: 0; aspect-ratio: 1; border-radius: 50%; cursor: pointer;
+    transition: background .3s, color .3s, transform .3s var(--ease);
+  }
+  .dias button:disabled { opacity: .3; cursor: default; }
+  .dias button:not(:disabled) { background: var(--creme-suave); font-weight: 500; }
+  .dias button:not(:disabled):hover, .dias button.ativo { background: var(--oliva); color: var(--papel); transform: scale(1.1); }
+  .horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .horas button {
+    font: 500 .82rem var(--sans); color: var(--oliva); background: none; border: 1px solid rgba(80, 85, 58, .4);
+    padding: 12px; border-radius: 999px; cursor: pointer; transition: background .3s, color .3s, transform .3s var(--ease);
+  }
+  .horas button:hover { background: var(--oliva); color: var(--papel); transform: translateY(-2px); }
+  .nota-rascunho { margin-top: 20px; font-size: .72rem; opacity: .6; text-align: center; }
+
+  /* ---------- Rodapé ---------- */
+  body > footer {
+    background: linear-gradient(to bottom, var(--j-cafe) 0, var(--cafe-bloco) 80px);
+    color: var(--creme); padding: 56px 0 40px;
+  }
+  .rodape-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 50px; padding-bottom: 50px; border-bottom: 1px solid rgba(228, 212, 193, .2); }
+  .rodape-grid .marca-nome { font-size: 1.6rem; }
+  .rodape-grid p { font-size: .9rem; font-weight: 300; opacity: .8; margin-top: 16px; max-width: 34ch; }
+  .rodape-grid h4 { font: 500 .7rem var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--areia); margin-bottom: 18px; }
+  .rodape-grid ul { list-style: none; }
+  .rodape-grid li { padding: 5px 0; font-size: .9rem; }
+  .rodape-grid li a { display: inline-block; transition: transform .35s var(--ease), color .35s; }
+  .rodape-grid li a:hover { transform: translateX(6px); color: var(--areia); }
+  .fim { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 26px; font-size: .74rem; opacity: .6; }
+
+  /* ---------- Entrada ao rolar ---------- */
+  .surgir { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+  .surgir.visto { opacity: 1; transform: none; }
+
+  /* ---------- Responsivo ---------- */
+  @media (max-width: 920px) {
+    .menu li:not(:last-child) { display: none; }
+    .hero-grid, .sobre-grid, .agenda-grid { grid-template-columns: 1fr; gap: 50px; }
+    .retrato { max-width: 380px; margin-inline: auto; width: 100%; }
+    .cartoes, .relatos-grid, .posts { grid-template-columns: 1fr; }
+    .passos-grid { grid-template-columns: 1fr 1fr; }
+    .rodape-grid { grid-template-columns: 1fr; }
+    section { padding: 48px 0; }
+    .hero { padding-top: 120px; }
+  }
+  @media (max-width: 520px) {
+    .wrap { width: calc(100% - 32px); }
+    .passos-grid { grid-template-columns: 1fr; }
+    .marca-nome { font-size: 1rem; }
+    .horas { grid-template-columns: 1fr 1fr; }
+    .calendly { padding: 22px 16px; }
+    .dias { gap: 3px; }
+  }
+  .hero-grid > *, .sobre-grid > *, .agenda-grid > * { min-width: 0; }
+  @media (max-width: 380px) {
+    .marca-nome { display: none; }
+    footer .marca-nome { display: block; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    .surgir { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header id="topo">
+  <div class="wrap">
+    <nav>
+      <a href="#inicio" class="marca" aria-label="Larah Melyssa Nutricionista — início">
+        <span class="monograma">LM</span>
+        <span class="marca-nome">Larah Melyssa<small>Nutricionista</small></span>
+      </a>
+      <ul class="menu">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#areas">Atendimento</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#relatos">Relatos</a></li>
+        <li><a href="#agendar" class="btn btn-cheio">Agendar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="rotulo surgir">Nutrição clínica · CRN 00000</span>
+      <h1 class="surgir" style="--d:.08s">Comer bem é um cuidado que <em>cabe na sua rotina</em>.</h1>
+      <p class="lead surgir" style="--d:.16s">Acompanhamento nutricional individual, sem dietas da moda e sem culpa. Um plano construído com você, para o seu corpo e para a vida que você leva.</p>
+      <div class="acoes surgir" style="--d:.24s">
+        <a href="#agendar" class="btn btn-cheio">Agendar consulta <span class="seta">→</span></a>
+        <a href="#sobre" class="btn btn-linha">Conhecer o trabalho</a>
+      </div>
+    </div>
+    <div class="retrato surgir" style="--d:.2s">
+      <div class="aro"></div>
+      <div class="foto"><span>LM</span></div>
+      <small class="aviso-foto">Foto da Larah aqui</small>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="wrap sobre-grid">
+    <div class="surgir">
+      <span class="rotulo">Sobre</span>
+      <blockquote>“Nutrição não é sobre restringir. É sobre entender o que o seu corpo pede.”</blockquote>
+    </div>
+    <div class="surgir" style="--d:.12s">
+      <h2>Prazer, eu sou a <em>Larah</em>.</h2>
+      <p class="lead" style="margin-top:22px">Sempre me incomodou ver o ato de comer virar fonte de ansiedade. Por isso, decidi seguir uma nutrição que resgata a simplicidade e a saúde real, sem restrições.</p>
+      <p>Sou especialista no ciclo materno-infantil e guio você em fases fundamentais: da pré-concepção, gestação, pós-parto e lactação até a introdução alimentar e a infância. No nosso acompanhamento, você encontrará um espaço acolhedor e metas viáveis para construir uma rotina alimentar leve e segura para toda a família.</p>
+      <ul class="formacao">
+        <li>Graduação em Nutrição <span>CRUZEIRO DO SUL</span></li>
+        <li>Pós-graduação em Materno infantil <span>PLENITUDE EDUCAÇÃO</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS -->
+<section class="areas" id="areas">
+  <div class="wrap">
+    <div class="cabecalho-secao surgir">
+      <span class="rotulo">Atendimento</span>
+      <h2>Como posso <em>te ajudar</em></h2>
+      <p>As áreas abaixo são sugestões para o rascunho; ajustamos conforme o foco real do consultório.</p>
+    </div>
+    <div class="cartoes">
+      <article class="cartao surgir">
+        <div class="icone"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="3"/><path d="M3 21c0-4 2.500-7 6-7 1.300 0 2.400.4 3.300 1.100"/><circle cx="17" cy="13" r="2"/><path d="M13.500 21c0-2.500 1.500-4.500 3.500-4.500s3.500 2 3.500 4.500"/></svg></div>
+        <h3>Materno infantil</h3>
+        <p>Nutrição da gestação à infância: pré-natal, amamentação, introdução alimentar e alimentação da criança.</p>
+      </article>
+      <article class="cartao surgir" style="--d:.1s">
+        <div class="icone"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M6 21c0-4 2.500-7 6-7s6 3 6 7"/></svg></div>
+        <h3>Saúde da mulher</h3>
+        <p>Cuidado nutricional nas diferentes fases: ciclo menstrual, gestação, pós-parto e menopausa.</p>
+      </article>
+      <article class="cartao surgir" style="--d:.2s">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div>
+        <h3>Nutrição clínica</h3>
+        <p>Suporte nutricional para diabetes, colesterol, hipertensão e saúde intestinal, alinhado aos seus exames.</p>
+      </article>
+      <article class="cartao surgir">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"/><path d="M5 19c3-5 6-8 10-10"/></svg></div>
+        <h3>Reeducação alimentar</h3>
+        <p>Novos hábitos construídos aos poucos, com cardápios que respeitam sua rotina, seu gosto e seu orçamento.</p>
+      </article>
+      <article class="cartao surgir" style="--d:.1s">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M16 7v10M20 10v4M8 12h8"/></svg></div>
+        <h3>Nutrição esportiva</h3>
+        <p>Estratégia alimentar para ganho de massa, desempenho e recuperação, do iniciante ao atleta amador.</p>
+      </article>
+      <article class="cartao surgir" style="--d:.2s">
+        <div class="icone"><svg viewBox="0 0 24 24"><path d="M12 21c-4-2.5-8-6-8-10.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 8 2.5C20 15 16 18.500 12 21z"/></svg></div>
+        <h3>Emagrecimento saudável</h3>
+        <p>Perda de peso gradual e sustentável, sem cortar grupos alimentares nem abrir mão do prazer de comer.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="passos" id="como-funciona">
+  <div class="wrap">
+    <div class="cabecalho-secao surgir">
+      <span class="rotulo">Como funciona</span>
+      <h2>Do primeiro contato ao <em>resultado</em></h2>
+    </div>
+    <div class="passos-grid">
+      <div class="passo surgir"><span class="num">01</span><h3>Agendamento</h3><p>Você escolhe o melhor dia e horário pelo Calendly, em menos de um minuto.</p></div>
+      <div class="passo surgir" style="--d:.1s"><span class="num">02</span><h3>Primeira consulta</h3><p>Conversamos sobre rotina, histórico, exames e objetivos. Sem pressa.</p></div>
+      <div class="passo surgir" style="--d:.2s"><span class="num">03</span><h3>Plano alimentar</h3><p>Você recebe um plano feito para você, com orientações e substituições.</p></div>
+      <div class="passo surgir" style="--d:.3s"><span class="num">04</span><h3>Acompanhamento</h3><p>Retornos periódicos para ajustar o plano e acompanhar a evolução.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="wrap">
+    <div class="topo surgir">
+      <div class="cabecalho-secao">
+        <span class="rotulo">Blog</span>
+        <h2>Conteúdo para <em>comer com consciência</em></h2>
+      </div>
+      <a href="#" class="btn btn-linha">Ver todos os artigos <span class="seta">→</span></a>
+    </div>
+    <div class="posts">
+      <article class="post surgir">
+        <div class="capa c1"><i></i><b>Hábitos</b></div>
+        <time>Artigo de exemplo · 6 min</time>
+        <h3>Por que dietas restritivas não funcionam a longo prazo</h3>
+        <p>O que acontece com o corpo quando cortamos demais, e o que fazer no lugar.</p>
+        <span class="ler">Ler artigo <span>→</span></span>
+      </article>
+      <article class="post surgir" style="--d:.1s">
+        <div class="capa c2"><i></i><b>Rotina</b></div>
+        <time>Artigo de exemplo · 4 min</time>
+        <h3>Marmitas da semana em uma hora</h3>
+        <p>Um método simples para organizar as refeições sem passar o domingo na cozinha.</p>
+        <span class="ler">Ler artigo <span>→</span></span>
+      </article>
+      <article class="post surgir" style="--d:.2s">
+        <div class="capa c3"><i></i><b>Saúde</b></div>
+        <time>Artigo de exemplo · 5 min</time>
+        <h3>Intestino: o que ele diz sobre a sua alimentação</h3>
+        <p>Sinais do dia a dia que merecem atenção e como a alimentação pode ajudar.</p>
+        <span class="ler">Ler artigo <span>→</span></span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RELATOS -->
+<section class="relatos" id="relatos">
+  <div class="wrap">
+    <div class="cabecalho-secao surgir">
+      <span class="rotulo">Relatos</span>
+      <h2>Quem já passou <em>por aqui</em></h2>
+      <p>Depoimentos fictícios, só para ocupar o espaço no rascunho. Entram os reais, com autorização dos pacientes.</p>
+    </div>
+    <div class="relatos-grid">
+      <article class="relato surgir"><span class="aspas">“</span><p>Espaço para o depoimento de um paciente sobre a experiência com o acompanhamento.</p><footer>Nome · objetivo</footer></article>
+      <article class="relato surgir" style="--d:.1s"><span class="aspas">“</span><p>Espaço para um segundo depoimento, de preferência com um perfil diferente do primeiro.</p><footer>Nome · objetivo</footer></article>
+      <article class="relato surgir" style="--d:.2s"><span class="aspas">“</span><p>Espaço para um terceiro depoimento, curto e direto, sobre o resultado alcançado.</p><footer>Nome · objetivo</footer></article>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDAMENTO -->
+<section class="agenda" id="agendar">
+  <div class="wrap agenda-grid">
+    <div class="surgir">
+      <span class="rotulo">Agendamento</span>
+      <h2>Vamos marcar a sua <em>primeira consulta</em>?</h2>
+      <ul>
+        <li>Escolha o dia e o horário direto na agenda</li>
+        <li>Confirmação e lembrete automáticos por e-mail</li>
+        <li>Atendimento online ou presencial</li>
+      </ul>
+      <a href="#" class="btn btn-linha">Tirar dúvidas no WhatsApp <span class="seta">→</span></a>
+    </div>
+    <div class="calendly surgir" style="--d:.12s">
+      <header><strong>Escolha uma data</strong><small>Calendly</small></header>
+      <div class="dias" id="dias">
+        <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
+      </div>
+      <div class="horas">
+        <button>09:00</button><button>10:30</button><button>14:00</button>
+        <button>15:30</button><button>17:00</button><button>18:30</button>
+      </div>
+      <p class="nota-rascunho">Ilustração. No site final, este bloco é o widget real do Calendly da Larah.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="rodape-grid">
+      <div>
+        <span class="marca-nome">Larah Melyssa<small>Nutricionista</small></span>
+        <p>Nutrição clínica e materno infantil com acompanhamento individual, online e presencial.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#areas">Atendimento</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#agendar">Agendar consulta</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">E-mail</a></li>
+          <li>Cabreúva · SP</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fim"><span>© 2026 Larah Melyssa · CRN 00000</span><span>Rascunho de protótipo</span></div>
+  </div>
+</footer>
+
+<script>
+  // Cabeçalho ganha fundo ao rolar
+  const topo = document.getElementById('topo');
+  const aoRolar = () => topo.classList.toggle('rolou', window.scrollY > 30);
+  addEventListener('scroll', aoRolar, { passive: true }); aoRolar();
+
+  // Elementos surgem ao entrar na tela
+  const obs = new IntersectionObserver((itens) => {
+    itens.forEach(i => { if (i.isIntersecting) { i.target.classList.add('visto'); obs.unobserve(i.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll('.surgir').forEach(el => obs.observe(el));
+
+  // Calendário ilustrativo
+  const dias = document.getElementById('dias');
+  for (let d = 1; d <= 28; d++) {
+    const b = document.createElement('button');
+    b.textContent = d;
+    const fimDeSemana = d % 7 === 6 || d % 7 === 0;
+    if (d < 9 || fimDeSemana) b.disabled = true;
+    if (d === 12) b.className = 'ativo';
+    b.onclick = () => { dias.querySelector('.ativo')?.classList.remove('ativo'); b.classList.add('ativo'); };
+    dias.appendChild(b);
+  }
+</script>
+</body>
+</html>
