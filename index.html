@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Larah Melyssa · Nutricionista</title>
 <meta name="description" content="Nutrição clínica com acompanhamento individual. Conheça o trabalho, leia o blog e agende sua consulta.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -125,12 +127,15 @@
   nav { display: flex; align-items: center; gap: 34px; }
   .marca { display: flex; align-items: center; gap: 14px; }
   .monograma {
-    font-family: var(--serif); font-size: 1.7rem; line-height: 1; color: var(--cafe);
-    width: 46px; height: 46px; border: 1px solid rgba(76, 52, 34, .35); border-radius: 50%;
-    display: grid; place-items: center; letter-spacing: -.06em;
+    flex: none; color: var(--cafe);
+    width: 54px; height: 54px; border: 1px solid rgba(76, 52, 34, .35); border-radius: 50%;
+    display: grid; place-items: center;
     transition: transform .6s var(--ease), background .4s, color .4s;
   }
-  .marca:hover .monograma { transform: rotate(-8deg) scale(1.06); background: var(--cafe); color: var(--creme); }
+  /* imagens comuns (sem máscara CSS), para funcionar também abrindo o arquivo direto */
+  .monograma img { width: 74%; height: 74%; object-fit: contain; }
+  .logo-rodape { width: 170px; height: 170px; margin: -6px 0 0 -8px; }
+  .marca:hover .monograma { transform: rotate(-8deg) scale(1.06); background: var(--creme-suave); }
   .marca-nome { font-family: var(--serif); font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.1; }
   .marca-nome small { display: block; font: 400 .56rem var(--sans); letter-spacing: .38em; margin-top: 4px; }
   .menu { display: flex; align-items: center; gap: 34px; list-style: none; margin-left: auto; }
@@ -163,33 +168,54 @@
 
   /* ---------- Hero ---------- */
   .hero { --topo: var(--papel); --para: var(--papel); --fundo: var(--j-claro); padding: 150px 0 56px; overflow: hidden; }
-  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 70px; align-items: center; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
   .hero p.lead { margin: 28px 0 40px; }
   .acoes { display: flex; flex-wrap: wrap; gap: 14px; }
 
   /* a largura acompanha a altura da tela, para o retrato caber inteiro em notebooks */
   .retrato {
-    position: relative; aspect-ratio: 4 / 5; justify-self: center;
-    width: min(100%, max(260px, calc((100svh - 210px) * .8)));
+    position: relative; aspect-ratio: 1; justify-self: center; isolation: isolate;
+    width: min(100%, max(280px, calc(100svh - 230px)));
   }
-  .retrato .foto {
-    position: absolute; inset: 0; border-radius: 280px 280px var(--raio) var(--raio);
-    background: linear-gradient(160deg, var(--creme) 0%, var(--areia) 100%);
-    display: grid; place-items: center; overflow: hidden;
-    transition: transform .8s var(--ease), box-shadow .8s var(--ease);
-  }
-  .retrato:hover .foto { transform: translateY(-8px); box-shadow: 0 40px 60px -40px rgba(76, 52, 34, .5); }
-  .retrato .foto span { font: 400 5.5rem var(--serif); color: rgba(76, 52, 34, .22); letter-spacing: -.06em; }
-  .retrato .aro {
-    position: absolute; inset: -18px 18px 18px -18px; border: 1px solid var(--terracota);
-    border-radius: 280px 280px var(--raio) var(--raio); opacity: .5; z-index: -1;
+  /* disco de cor atrás da foto, deslocado: a foto fica por cima dele */
+  .retrato .disco {
+    position: absolute; inset: 9% -5% -5% 9%; border-radius: 50%; z-index: -2;
+    background: linear-gradient(150deg, var(--areia), var(--terracota)); opacity: .55;
     transition: transform .8s var(--ease);
   }
-  .retrato:hover .aro { transform: translate(-8px, 8px); }
-  .aviso-foto {
-    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); white-space: nowrap;
-    font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(76, 52, 34, .6);
+  .retrato .aro {
+    position: absolute; inset: -4% 4% 4% -4%; border: 1px solid var(--terracota);
+    border-radius: 50%; opacity: .6; z-index: -1;
+    transition: transform .8s var(--ease);
   }
+  .retrato .foto {
+    position: absolute; inset: 0; border-radius: 50%; overflow: hidden;
+    background: linear-gradient(160deg, var(--creme) 0%, var(--areia) 100%);
+    border: 6px solid var(--papel);
+    box-shadow: 0 30px 60px -36px rgba(76, 52, 34, .55);
+    transition: transform .8s var(--ease), box-shadow .8s var(--ease);
+  }
+  /* o arquivo já vem recortado em quadrado, no enquadramento certo */
+  .retrato .foto img { width: 100%; height: 100%; object-fit: cover; }
+  .retrato:hover .foto { transform: translateY(-8px); box-shadow: 0 44px 70px -38px rgba(76, 52, 34, .6); }
+  .retrato:hover .disco { transform: translate(10px, 10px); }
+  .retrato:hover .aro { transform: translate(-8px, -8px); }
+  /* selo sobreposto à borda da foto */
+  .selo {
+    position: absolute; left: -4%; bottom: 9%; z-index: 1;
+    background: var(--papel); border-radius: 999px; padding: 12px 24px 12px 12px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 20px 40px -22px rgba(76, 52, 34, .55);
+    transition: transform .8s var(--ease);
+  }
+  .retrato:hover .selo { transform: translateY(-14px); }
+  .selo i {
+    flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--oliva); color: var(--creme);
+    display: grid; place-items: center;
+  }
+  .selo svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .selo small { display: block; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--terracota); line-height: 1.4; }
+  .selo strong { display: block; font: 400 1.15rem/1.15 var(--serif); white-space: nowrap; }
 
   /* ---------- Sobre ---------- */
   .sobre { --topo: var(--j-claro); --para: var(--creme-suave); --fundo: var(--j-claro); }
@@ -371,6 +397,7 @@
     nav { gap: 12px; }
     .cta-topo { margin-left: auto; }
     .menu-btn { display: block; }
+    .monograma { width: 46px; height: 46px; }
     .menu {
       position: absolute; top: 100%; left: 0; right: 0; margin: 0;
       flex-direction: column; align-items: stretch; gap: 0; padding: 4px 24px 14px;
@@ -385,7 +412,10 @@
     .menu a:not(.btn)::after { display: none; }
 
     .hero-grid, .sobre-grid, .agenda-grid { grid-template-columns: 1fr; gap: 50px; }
-    .retrato { width: min(100%, 380px); }
+    .retrato { width: min(92%, 420px); }
+    .selo { left: -2%; padding: 9px 18px 9px 9px; }
+    .selo i { width: 34px; height: 34px; }
+    .selo strong { font-size: 1rem; }
     .cartoes, .relatos-grid, .posts { grid-template-columns: 1fr; }
     .passos-grid { grid-template-columns: 1fr 1fr; }
     .rodape-grid { grid-template-columns: 1fr; }
@@ -401,8 +431,8 @@
     .rodape-grid > div:first-child { grid-column: 1 / -1; }
   }
   @media (min-width: 720px) and (max-width: 920px) {
-    .hero-grid { grid-template-columns: 1.1fr .9fr; gap: 36px; }
-    .retrato { width: 100%; }
+    .hero-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .retrato { width: 96%; }
     .agenda-grid { grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
   }
   @media (max-width: 520px) {
@@ -437,7 +467,7 @@
   <div class="wrap">
     <nav>
       <a href="#inicio" class="marca" aria-label="Larah Melyssa Nutricionista — início">
-        <span class="monograma">LM</span>
+        <span class="monograma"><img src="imagens/logo-monograma.png" alt="" width="400" height="400"></span>
         <span class="marca-nome">Larah Melyssa<small>Nutricionista</small></span>
       </a>
       <ul class="menu" id="menu">
@@ -469,9 +499,13 @@
       </div>
     </div>
     <div class="retrato surgir" style="--d:.2s">
+      <div class="disco"></div>
       <div class="aro"></div>
-      <div class="foto"><span>LM</span></div>
-      <small class="aviso-foto">Foto da Larah aqui</small>
+      <div class="selo">
+        <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14z"/><path d="M5 19c3-5 6-8 10-10"/></svg></i>
+        <span><small>Especialista em</small><strong>Materno infantil</strong></span>
+      </div>
+      <div class="foto"><img src="imagens/larah-perfil.jpg" alt="Larah Melyssa, nutricionista, de perfil, sorrindo, com o jaleco sobre o ombro" width="1000" height="1000" fetchpriority="high"></div>
     </div>
   </div>
 </section>
@@ -639,7 +673,7 @@
   <div class="wrap">
     <div class="rodape-grid">
       <div>
-        <span class="marca-nome">Larah Melyssa<small>Nutricionista</small></span>
+        <img class="logo-rodape" src="imagens/logo-clara.png" alt="Larah Melyssa Nutricionista" width="640" height="640" loading="lazy">
         <p>Nutrição clínica e materno infantil com acompanhamento individual, online e presencial.</p>
       </div>
       <div>

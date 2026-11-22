@@ -20,7 +20,6 @@ Na Vercel: **Add New → Project**, importar o repositório e manter as opções
 ## Pendências antes de divulgar
 
 - CRN real (hoje `00000`)
-- Foto da Larah e logomarca original
 - Link do Calendly no bloco de agendamento (hoje é uma ilustração)
 - Links de Instagram, WhatsApp e e-mail
 - Depoimentos reais e artigos do blog (hoje são textos de exemplo)
