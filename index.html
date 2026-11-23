@@ -65,11 +65,8 @@
   :root {
     /* cor exata na emenda entre dois blocos vizinhos */
     --j-claro: color-mix(in oklab, var(--papel), var(--creme-suave));
-    /* versões mais claras do oliva e do café, só para o fundo dos blocos escuros */
-    --oliva-bloco: #737957;
+    /* versão mais clara do café, só para o fundo do rodapé */
     --cafe-bloco: #6E5340;
-    --j-oliva-in: color-mix(in oklab, var(--papel) 22%, var(--oliva-bloco));
-    --j-oliva-out: color-mix(in oklab, var(--papel) 30%, var(--oliva-bloco));
     --j-creme: color-mix(in oklab, var(--creme-suave), var(--creme));
     --j-cafe: color-mix(in oklab, var(--creme) 22%, var(--cafe-bloco));
   }
@@ -235,7 +232,7 @@
   .formacao span { color: var(--terracota); font-size: .78rem; letter-spacing: .12em; }
 
   /* ---------- Especialidades ---------- */
-  .areas { --topo: var(--j-claro); --para: var(--papel); --fundo: var(--j-oliva-in); --fout: 240px; padding-bottom: 80px; }
+  .areas { --topo: var(--j-claro); --para: var(--papel); --fundo: var(--j-claro); }
   .cartoes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
   .cartao {
     background: #fff; border: 1px solid rgba(76, 52, 34, .08); border-radius: var(--raio);
@@ -258,31 +255,27 @@
   .cartao:hover .icone { background: var(--oliva); color: var(--creme); transform: rotate(-8deg) scale(1.08); }
   .cartao p { margin-top: 12px; font-size: .93rem; font-weight: 300; }
 
-  /* ---------- Como funciona (bloco escuro) ---------- */
-  .passos { --topo: var(--j-oliva-in); --para: var(--oliva-bloco); --fundo: var(--j-oliva-out); --fin: 70px; --fout: 100px; padding: 44px 0 76px; color: var(--papel); }
-  .passos .rotulo { color: var(--creme); }
-  .passos em { color: var(--areia); }
-  .passos .passo p { opacity: .95; }
-  .passos .passo .num { opacity: .8; }
-  .passos-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(228, 212, 193, .25); }
+  /* ---------- Como funciona (mesmo degradê do bloco Sobre) ---------- */
+  .passos { --topo: var(--j-claro); --para: var(--creme-suave); --fundo: var(--j-claro); }
+  .passos-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(76, 52, 34, .15); }
   .passo {
     padding: 34px 26px 30px 0; position: relative;
     transition: transform .5s var(--ease);
   }
   .passo::before {
     content: ""; position: absolute; top: -1px; left: 0; height: 1px; width: 100%;
-    background: var(--areia); transform: scaleX(0); transform-origin: left;
+    background: var(--terracota); transform: scaleX(0); transform-origin: left;
     transition: transform .7s var(--ease);
   }
   .passo:hover { transform: translateY(-6px); }
   .passo:hover::before { transform: scaleX(1); }
-  .passo .num { font: italic 400 3rem/1 var(--serif); color: var(--areia); opacity: .55; transition: opacity .4s; }
+  .passo .num { font: italic 400 3rem/1 var(--serif); color: var(--terracota); opacity: .6; transition: opacity .4s; }
   .passo:hover .num { opacity: 1; }
   .passo h3 { margin: 18px 0 10px; }
-  .passo p { font-size: .9rem; font-weight: 300; opacity: .85; }
+  .passo p { font-size: .9rem; font-weight: 300; }
 
   /* ---------- Blog ---------- */
-  .blog { --topo: var(--j-oliva-out); --para: var(--papel); --fundo: var(--j-claro); --fin: 220px; padding-top: 110px; }
+  .blog { --topo: var(--j-claro); --para: var(--papel); --fundo: var(--j-claro); }
   .blog .topo { display: flex; align-items: end; justify-content: space-between; gap: 30px; flex-wrap: wrap; margin-bottom: 56px; }
   .blog .cabecalho-secao { margin-bottom: 0; }
   .posts { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 26px; }
